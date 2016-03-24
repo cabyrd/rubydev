@@ -1,6 +1,14 @@
 # **Rubydev**
-A quick and easy ruby development environment based upon ruby:latest.
+A quick and easy ruby development environment based upon fedora:latest.
 Containers are expected to contain a few common development tools as follows:
+
+### Shell 
+* [bash](https://www.gnu.org/software/bash/)
+* [bash-it](https://github.com/Bash-it/bash-it)
+
+### Ruby 
+* [RVM](https://rvm.io/)
+* [Ruby 2.2.3](https://www.ruby-lang.org/en/downloads/)
 
 ### Source Control
 * Git 
@@ -13,6 +21,7 @@ Containers are expected to contain a few common development tools as follows:
 ### Utilities 
 * [tmux](https://tmux.github.io/)
 * [tmuxinator](https://github.com/tmuxinator/tmuxinator)
+* [packer](https://www.packer.io/)
   
 ## **Getting Started**
 1.  Pull the image `docker pull cabyrd/rubydev:latest`

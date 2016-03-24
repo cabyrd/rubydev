@@ -1,35 +1,50 @@
-FROM ruby:latest
+FROM fedora:latest
 MAINTAINER Chris Byrd
 
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    dos2unix \
-    git \
-    gnupg \
-    less \
-    libgmp-dev \
-    patch \
-    rsync \
-    smbclient \
-    subversion \
-    silversearcher-ag \
-    tmux \
-    unzip \
-    wget \
-    vim \
-    zip \
-  && gem install tmuxinator \
-  && gem install rubocop \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
+RUN dnf install -y \
+      automake \
+      curl \
+      dos2unix \
+      gcc \
+      gcc-c++ \
+      git \
+      gpg \
+      kernel-devel \
+      make \
+      openssh-clients \
+      patch \
+      procps-ng \
+      rsync \
+      samba-client \
+      subversion \
+      tar \
+      the_silver_searcher \
+      tmux \
+      tree \
+      unzip \
+      which \
+      wget \
+      vim-enhanced \
+      zip \
+    && dnf clean all
+
+RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 \
+    && curl -sSL https://get.rvm.io | bash -s stable \
+    && source /usr/local/rvm/scripts/rvm \ 
+    && /usr/local/rvm/bin/rvm install 2.2.3 \ 
+    && /usr/local/rvm/bin/rvm alias create default 2.2.3 \ 
+    && /usr/local/rvm/bin/rvm all do gem install bundle \  
+    && /usr/local/rvm/bin/rvm all do gem install tmuxinator \  
+    && /usr/local/rvm/bin/rvm all do gem install rubocop \ 
+    && dnf clean all
 
 # Setup packer for image builds
 RUN mkdir /packer \
   && cd packer \
   && wget https://releases.hashicorp.com/packer/0.10.0/packer_0.10.0_linux_amd64.zip \
   && unzip *.zip \
-  && ln -s /packer/packer /usr/local/bin/packer
+  && ln -s /packer/packer /usr/local/bin/packer \
+  && rm *.zip
 
 # install gecode 
 RUN mkdir /gecode-tmp \
@@ -46,7 +61,10 @@ RUN mkdir src && mkdir .ssh
 # Setup bash
 RUN git clone --depth=1 https://github.com/Bash-it/bash-it.git .bash_it \
   && .bash_it/install.sh \
-  && echo "export PATH=$PATH:$BUNDLE_PATH" >> .bashrc
+  && echo "source /usr/local/rvm/scripts/rvm" >> .bashrc \ 
+  && echo "alias vi=vim" >> .bashrc \ 
+  && echo "export LC_CTYPE=en_US.UTF-8" >> .bashrc \ 
+  && echo "export LC_ALL=en_US.UTF-8" >> .bashrc
 
 # Setup vim
 RUN git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/Vundle.vim \
