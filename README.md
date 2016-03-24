@@ -26,7 +26,7 @@ Containers are expected to contain a few common development tools as follows:
 ## **Getting Started**
 ```
 docker pull cabyrd/rubydev:latest
-docker run -ti cabyrd/rubydev
+docker run -ti docker.io/cabyrd/rubydev
 ```
 
 
