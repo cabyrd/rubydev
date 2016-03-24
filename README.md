@@ -24,8 +24,11 @@ Containers are expected to contain a few common development tools as follows:
 * [packer](https://www.packer.io/)
   
 ## **Getting Started**
-1.  Pull the image `docker pull cabyrd/rubydev:latest`
-2.  Start a container `docker run -ti cabyrd:/rubydev`
+```
+docker pull cabyrd/rubydev:latest
+docker run -ti cabyrd/rubydev
+```
+
 
 Starting containers as shown above will give you access to a 
 development environment.  Keep in mind that all source code
