@@ -5,6 +5,7 @@ RUN dnf install -y \
       automake \
       curl \
       dos2unix \
+      flex \
       gcc \
       gcc-c++ \
       git \
@@ -62,9 +63,7 @@ RUN mkdir src && mkdir .ssh
 RUN git clone --depth=1 https://github.com/Bash-it/bash-it.git .bash_it \
   && .bash_it/install.sh \
   && echo "source /usr/local/rvm/scripts/rvm" >> .bashrc \ 
-  && echo "alias vi=vim" >> .bashrc \ 
-  && echo "export LC_CTYPE=en_US.UTF-8" >> .bashrc \ 
-  && echo "export LC_ALL=en_US.UTF-8" >> .bashrc
+  && echo "alias vi=vim" >> .bashrc
 
 # Setup vim
 RUN git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/Vundle.vim \
@@ -73,5 +72,5 @@ RUN git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/Vundle.vim
   && rm -rf dot-files \ 
   && vim +PluginInstall +qall
 
-ENV EDITOR=vim SHELL=/bin/bash
+ENV EDITOR=vim SHELL=/bin/bash LC_CTYPE=en_US.UTF-8 LC_ALL=en_US.UTF-8 LD_LIBRARY_PATH=/usr/local/lib USE_SYSTEM_GECODE=1
 CMD ["/bin/bash"]
