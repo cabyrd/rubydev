@@ -3,6 +3,7 @@ MAINTAINER Chris Byrd
 
 RUN dnf install -y \
       automake \
+      bash-completion \
       curl \
       dos2unix \
       flex \
@@ -63,6 +64,7 @@ RUN mkdir src && mkdir .ssh
 RUN git clone --depth=1 https://github.com/Bash-it/bash-it.git .bash_it \
   && .bash_it/install.sh \
   && echo "source /usr/local/rvm/scripts/rvm" >> .bashrc \ 
+  && echo "source /usr/share/bash-completion/completions/git" >> .bashrc \
   && echo "alias vi=vim" >> .bashrc
 
 # Setup vim
