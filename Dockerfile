@@ -1,9 +1,12 @@
 FROM fedora:latest
 MAINTAINER Chris Byrd
 
-RUN dnf install -y \
+RUN dnf clean all \
+  && dnf update -v --debugsolver vim-minimal -y \ 
+  && dnf install -y \
       automake \
       bash-completion \
+      ctags \
       curl \
       dos2unix \
       flex \
@@ -13,20 +16,24 @@ RUN dnf install -y \
       gpg \
       kernel-devel \
       make \
+      nodejs \
       openssh-clients \
       patch \
+      powerline \
       procps-ng \
       rsync \
       samba-client \
       subversion \
       tar \
+      task \
       the_silver_searcher \
       tmux \
+      tmux-powerline \
       tree \
       unzip \
       which \
       wget \
-      vim-enhanced \
+      vim \
       zip \
     && dnf clean all
 
@@ -43,7 +50,7 @@ RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A170311380
 # Setup packer for image builds
 RUN mkdir /packer \
   && cd packer \
-  && wget https://releases.hashicorp.com/packer/0.10.0/packer_0.10.0_linux_amd64.zip \
+  && wget https://releases.hashicorp.com/packer/0.10.1/packer_0.10.1_linux_amd64.zip \
   && unzip *.zip \
   && ln -s /packer/packer /usr/local/bin/packer \
   && rm *.zip
@@ -58,19 +65,19 @@ RUN mkdir /gecode-tmp \
   && cd / && rm -rf /gecode-tmp 
 
 WORKDIR /root
-RUN mkdir src && mkdir .ssh
 
-# Setup bash
-RUN git clone --depth=1 https://github.com/Bash-it/bash-it.git .bash_it \
+# Setup util desired directories, bash, and vim
+RUN mkdir src \
+  && mkdir .ssh \ 
+  && git clone --depth=1 https://github.com/Bash-it/bash-it.git .bash_it \
   && .bash_it/install.sh \
   && echo "source /usr/local/rvm/scripts/rvm" >> .bashrc \ 
   && echo "source /usr/share/bash-completion/completions/git" >> .bashrc \
-  && echo "alias vi=vim" >> .bashrc
-
-# Setup vim
-RUN git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/Vundle.vim \
+  && echo "alias vi=vim" >> .bashrc \
+  && git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/Vundle.vim \
   && git clone https://github.com/cabyrd/dot-files.git \
   && cp dot-files/.vimrc . \
+  && cp dot-files/.tmux.conf . \
   && rm -rf dot-files \ 
   && vim +PluginInstall +qall
 
