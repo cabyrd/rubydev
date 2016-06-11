@@ -3,9 +3,10 @@ MAINTAINER Chris Byrd
 
 RUN dnf clean all \
   && dnf update -v --debugsolver vim-minimal -y \ 
-  && dnf install -y \
+  && dnf install --best --allowerasing -y \
       automake \
       bash-completion \
+      ca-certificates \
       ctags \
       curl \
       dos2unix \
@@ -71,6 +72,7 @@ RUN mkdir src \
   && mkdir .ssh \ 
   && git clone --depth=1 https://github.com/Bash-it/bash-it.git .bash_it \
   && .bash_it/install.sh \
+  && echo "export TERM=screen-256color" >> .bashrc \
   && echo "source /usr/local/rvm/scripts/rvm" >> .bashrc \ 
   && echo "source /usr/share/bash-completion/completions/git" >> .bashrc \
   && echo "alias vi=vim" >> .bashrc \
