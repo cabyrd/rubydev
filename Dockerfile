@@ -39,13 +39,13 @@ RUN dnf clean all \
     && dnf clean all
 
 RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 \
-    && curl -sSL https://get.rvm.io | bash -s stable \
+    && curl -v -sSL https://get.rvm.io | bash \
     && source /usr/local/rvm/scripts/rvm \ 
-    && /usr/local/rvm/bin/rvm install 2.2.3 \ 
-    && /usr/local/rvm/bin/rvm alias create default 2.2.3 \ 
-    && /usr/local/rvm/bin/rvm all do gem install bundle \  
-    && /usr/local/rvm/bin/rvm all do gem install tmuxinator \  
-    && /usr/local/rvm/bin/rvm all do gem install rubocop \ 
+    && /usr/local/rvm/bin/rvm install 2.3.1 \ 
+    && /usr/local/rvm/bin/rvm alias create default 2.3.1 \ 
+    && /usr/local/rvm/bin/rvm all do gem install --backtrace bundle \  
+    && /usr/local/rvm/bin/rvm all do gem install --backtrace tmuxinator \  
+    && /usr/local/rvm/bin/rvm all do gem install --backtrace rubocop \ 
     && dnf clean all
 
 # Setup packer for image builds

@@ -8,7 +8,7 @@ Containers are expected to contain a few common development tools as follows:
 
 ### Ruby 
 * [RVM](https://rvm.io/)
-* [Ruby 2.2.3](https://www.ruby-lang.org/en/downloads/)
+* [Ruby 2.3.1](https://www.ruby-lang.org/en/downloads/)
 
 ### Source Control
 * Git 
